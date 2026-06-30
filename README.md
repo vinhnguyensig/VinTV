@@ -9,6 +9,10 @@ The app uses a local catalog of 12 mock titles and Apple's public sample HLS
 stream, so it can demonstrate the complete browsing and playback experience
 without a backend service.
 
+## Prototype
+
+Watch the [VinAppleTV prototype demo on YouTube](https://www.youtube.com/watch?v=6bZDNoif2rY).
+
 ## Features
 
 - Animated splash screen and app composition root
