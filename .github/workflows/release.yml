@@ -1,0 +1,118 @@
+name: Release — Build & Distribute
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: release-${{ github.sha }}
+  cancel-in-progress: false  # never cancel a running release
+
+env:
+  XCODE_VERSION: "16.3"
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Job 1 – Release build, archive, IPA export
+  # ─────────────────────────────────────────────────────────────────────────────
+  release:
+    name: 🚀 Release Build
+    runs-on: macos-15
+
+    outputs:
+      build_number: ${{ steps.versioning.outputs.build_number }}
+      git_sha_short: ${{ steps.versioning.outputs.git_sha_short }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history required for commit counting
+
+      - name: Select Xcode ${{ env.XCODE_VERSION }}
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Setup Ruby & Bundler cache
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Restore Swift Package Manager cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData
+            .build
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      # ── Versioning ──────────────────────────────────────────────────────────
+      - name: Compute build number & short SHA
+        id: versioning
+        run: |
+          BUILD=$(git rev-list --count HEAD)
+          SHA=$(git rev-parse --short HEAD)
+          echo "build_number=$BUILD"    >> "$GITHUB_OUTPUT"
+          echo "git_sha_short=$SHA"     >> "$GITHUB_OUTPUT"
+          echo "## 📦 Release Info"      >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Build Number:** $BUILD" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Git SHA:** \`$SHA\`"    >> "$GITHUB_STEP_SUMMARY"
+
+      # ── Scaffold CI config stubs ─────────────────────────────────────────────
+      - name: Scaffold CI configuration stubs
+        run: |
+          mkdir -p AudioEffect/AppEnvironment/Configuration
+          cp AudioEffect/AppEnvironment/Configuration/dev.xcconfig.example \
+             AudioEffect/AppEnvironment/Configuration/dev.xcconfig
+          cp AudioEffect/AppEnvironment/Configuration/production.xcconfig.example \
+             AudioEffect/AppEnvironment/Configuration/production.xcconfig
+          cp AudioEffect/GoogleService-Info.plist.example \
+             AudioEffect/GoogleService-Info.plist
+
+      # ── Build release (Fastlane beta lane) ──────────────────────────────────
+      - name: Run Fastlane beta lane
+        env:
+          BUILD_NUMBER: ${{ steps.versioning.outputs.build_number }}
+          GIT_SHA: ${{ steps.versioning.outputs.git_sha_short }}
+        run: bundle exec fastlane beta
+
+      # ── Archive & IPA (Fastlane release lane) ───────────────────────────────
+      - name: Run Fastlane release lane (archive → IPA)
+        env:
+          BUILD_NUMBER: ${{ steps.versioning.outputs.build_number }}
+          GIT_SHA: ${{ steps.versioning.outputs.git_sha_short }}
+        run: bundle exec fastlane release
+
+      # ── Upload IPA artifact ──────────────────────────────────────────────────
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AudioEffect-${{ steps.versioning.outputs.build_number }}-${{ steps.versioning.outputs.git_sha_short }}.ipa
+          path: fastlane/builds/*.ipa
+          if-no-files-found: warn
+          retention-days: 30
+
+      # ── Upload dSYMs ────────────────────────────────────────────────────────
+      - name: Upload dSYMs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AudioEffect-dSYMs-${{ steps.versioning.outputs.build_number }}
+          path: fastlane/builds/*.dSYM.zip
+          if-no-files-found: ignore
+          retention-days: 30
+
+      # ── Job summary ─────────────────────────────────────────────────────────
+      - name: Write job summary
+        if: always()
+        run: |
+          echo "## 🏁 Release Build Result" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Key | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-----|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Build | ${{ steps.versioning.outputs.build_number }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| SHA | \`${{ steps.versioning.outputs.git_sha_short }}\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Branch | \`${{ github.ref_name }}\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Triggered by | @${{ github.actor }} |" >> "$GITHUB_STEP_SUMMARY"

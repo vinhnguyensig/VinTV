@@ -1,0 +1,675 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A1000012FEE900000000001 /* TVData in Frameworks */ = {isa = PBXBuildFile; productRef = 2A1000112FEE900000000001 /* TVData */; };
+		2A1000022FEE900000000001 /* TVDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 2A1000122FEE900000000001 /* TVDomain */; };
+		2A1000032FEE900000000001 /* VPAppTheme in Frameworks */ = {isa = PBXBuildFile; productRef = 2A1000132FEE900000000001 /* VPAppTheme */; };
+		2A1000042FEE900000000001 /* VPCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 2A1000142FEE900000000001 /* VPCommon */; };
+		2A1000052FEE900000000001 /* VPLocalStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 2A1000152FEE900000000001 /* VPLocalStorage */; };
+		2A1000062FEE900000000001 /* VPPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 2A1000162FEE900000000001 /* VPPlayer */; };
+		2A1000312FEE900000000001 /* TVDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 2A1000122FEE900000000001 /* TVDomain */; };
+		2A1000322FEE900000000001 /* VPAppTheme in Frameworks */ = {isa = PBXBuildFile; productRef = 2A1000132FEE900000000001 /* VPAppTheme */; };
+		2A1000332FEE900000000001 /* VPCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 2A1000142FEE900000000001 /* VPCommon */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1FE820322FEE71AA00FD0B7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FE8201C2FEE71A800FD0B7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1FE820232FEE71A800FD0B7A;
+			remoteInfo = VinAppleTV;
+		};
+		1FE8203C2FEE71AA00FD0B7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FE8201C2FEE71A800FD0B7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1FE820232FEE71A800FD0B7A;
+			remoteInfo = VinAppleTV;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1FE820242FEE71A800FD0B7A /* VinAppleTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VinAppleTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FE820312FEE71AA00FD0B7A /* VinAppleTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VinAppleTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FE8203B2FEE71AA00FD0B7A /* VinAppleTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VinAppleTVUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		1FE820262FEE71A800FD0B7A /* VinAppleTV */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VinAppleTV;
+			sourceTree = "<group>";
+		};
+		1FE820342FEE71AA00FD0B7A /* VinAppleTVTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VinAppleTVTests;
+			sourceTree = "<group>";
+		};
+		1FE8203E2FEE71AA00FD0B7A /* VinAppleTVUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VinAppleTVUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1FE820212FEE71A800FD0B7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1000012FEE900000000001 /* TVData in Frameworks */,
+				2A1000022FEE900000000001 /* TVDomain in Frameworks */,
+				2A1000032FEE900000000001 /* VPAppTheme in Frameworks */,
+				2A1000042FEE900000000001 /* VPCommon in Frameworks */,
+				2A1000052FEE900000000001 /* VPLocalStorage in Frameworks */,
+				2A1000062FEE900000000001 /* VPPlayer in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE8202E2FEE71AA00FD0B7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1000312FEE900000000001 /* TVDomain in Frameworks */,
+				2A1000322FEE900000000001 /* VPAppTheme in Frameworks */,
+				2A1000332FEE900000000001 /* VPCommon in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE820382FEE71AA00FD0B7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1FE8201B2FEE71A800FD0B7A = {
+			isa = PBXGroup;
+			children = (
+				1FE820262FEE71A800FD0B7A /* VinAppleTV */,
+				1FE820342FEE71AA00FD0B7A /* VinAppleTVTests */,
+				1FE8203E2FEE71AA00FD0B7A /* VinAppleTVUITests */,
+				1FE820252FEE71A800FD0B7A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1FE820252FEE71A800FD0B7A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FE820242FEE71A800FD0B7A /* VinAppleTV.app */,
+				1FE820312FEE71AA00FD0B7A /* VinAppleTVTests.xctest */,
+				1FE8203B2FEE71AA00FD0B7A /* VinAppleTVUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1FE820232FEE71A800FD0B7A /* VinAppleTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FE820452FEE71AA00FD0B7A /* Build configuration list for PBXNativeTarget "VinAppleTV" */;
+			buildPhases = (
+				1FE820202FEE71A800FD0B7A /* Sources */,
+				1FE820212FEE71A800FD0B7A /* Frameworks */,
+				1FE820222FEE71A800FD0B7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				1FE820262FEE71A800FD0B7A /* VinAppleTV */,
+			);
+			name = VinAppleTV;
+			packageProductDependencies = (
+				2A1000112FEE900000000001 /* TVData */,
+				2A1000122FEE900000000001 /* TVDomain */,
+				2A1000132FEE900000000001 /* VPAppTheme */,
+				2A1000142FEE900000000001 /* VPCommon */,
+				2A1000152FEE900000000001 /* VPLocalStorage */,
+				2A1000162FEE900000000001 /* VPPlayer */,
+			);
+			productName = VinAppleTV;
+			productReference = 1FE820242FEE71A800FD0B7A /* VinAppleTV.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1FE820302FEE71AA00FD0B7A /* VinAppleTVTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FE820482FEE71AA00FD0B7A /* Build configuration list for PBXNativeTarget "VinAppleTVTests" */;
+			buildPhases = (
+				1FE8202D2FEE71AA00FD0B7A /* Sources */,
+				1FE8202E2FEE71AA00FD0B7A /* Frameworks */,
+				1FE8202F2FEE71AA00FD0B7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1FE820332FEE71AA00FD0B7A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				1FE820342FEE71AA00FD0B7A /* VinAppleTVTests */,
+			);
+			name = VinAppleTVTests;
+			packageProductDependencies = (
+				2A1000122FEE900000000001 /* TVDomain */,
+				2A1000132FEE900000000001 /* VPAppTheme */,
+				2A1000142FEE900000000001 /* VPCommon */,
+			);
+			productName = VinAppleTVTests;
+			productReference = 1FE820312FEE71AA00FD0B7A /* VinAppleTVTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1FE8203A2FEE71AA00FD0B7A /* VinAppleTVUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FE8204B2FEE71AA00FD0B7A /* Build configuration list for PBXNativeTarget "VinAppleTVUITests" */;
+			buildPhases = (
+				1FE820372FEE71AA00FD0B7A /* Sources */,
+				1FE820382FEE71AA00FD0B7A /* Frameworks */,
+				1FE820392FEE71AA00FD0B7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1FE8203D2FEE71AA00FD0B7A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				1FE8203E2FEE71AA00FD0B7A /* VinAppleTVUITests */,
+			);
+			name = VinAppleTVUITests;
+			packageProductDependencies = (
+			);
+			productName = VinAppleTVUITests;
+			productReference = 1FE8203B2FEE71AA00FD0B7A /* VinAppleTVUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1FE8201C2FEE71A800FD0B7A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					1FE820232FEE71A800FD0B7A = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+					1FE820302FEE71AA00FD0B7A = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 1FE820232FEE71A800FD0B7A;
+					};
+					1FE8203A2FEE71AA00FD0B7A = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 1FE820232FEE71A800FD0B7A;
+					};
+				};
+			};
+			buildConfigurationList = 1FE8201F2FEE71A800FD0B7A /* Build configuration list for PBXProject "VinAppleTV" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1FE8201B2FEE71A800FD0B7A;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2A1000212FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/TVData" */,
+				2A1000222FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/TVDomain" */,
+				2A1000232FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPAppTheme" */,
+				2A1000242FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPCommon" */,
+				2A1000252FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPLocalStorage" */,
+				2A1000262FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPPlayer" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1FE820252FEE71A800FD0B7A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1FE820232FEE71A800FD0B7A /* VinAppleTV */,
+				1FE820302FEE71AA00FD0B7A /* VinAppleTVTests */,
+				1FE8203A2FEE71AA00FD0B7A /* VinAppleTVUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1FE820222FEE71A800FD0B7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE8202F2FEE71AA00FD0B7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE820392FEE71AA00FD0B7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1FE820202FEE71A800FD0B7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE8202D2FEE71AA00FD0B7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FE820372FEE71AA00FD0B7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1FE820332FEE71AA00FD0B7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1FE820232FEE71A800FD0B7A /* VinAppleTV */;
+			targetProxy = 1FE820322FEE71AA00FD0B7A /* PBXContainerItemProxy */;
+		};
+		1FE8203D2FEE71AA00FD0B7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1FE820232FEE71A800FD0B7A /* VinAppleTV */;
+			targetProxy = 1FE8203C2FEE71AA00FD0B7A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1FE820432FEE71AA00FD0B7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Y3X2RZ63VV;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		1FE820442FEE71AA00FD0B7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Y3X2RZ63VV;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = appletvos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				TVOS_DEPLOYMENT_TARGET = 26.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1FE820462FEE71AA00FD0B7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y3X2RZ63VV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.vinappletv.com.VinAppleTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Debug;
+		};
+		1FE820472FEE71AA00FD0B7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y3X2RZ63VV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.vinappletv.com.VinAppleTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Release;
+		};
+		1FE820492FEE71AA00FD0B7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y3X2RZ63VV;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.vinappletv.com.VinAppleTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VinAppleTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VinAppleTV";
+				TVOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		1FE8204A2FEE71AA00FD0B7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y3X2RZ63VV;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.vinappletv.com.VinAppleTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VinAppleTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VinAppleTV";
+				TVOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
+		1FE8204C2FEE71AA00FD0B7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y3X2RZ63VV;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.vinappletv.com.VinAppleTVUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_TARGET_NAME = VinAppleTV;
+			};
+			name = Debug;
+		};
+		1FE8204D2FEE71AA00FD0B7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y3X2RZ63VV;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.vinappletv.com.VinAppleTVUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_TARGET_NAME = VinAppleTV;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1FE8201F2FEE71A800FD0B7A /* Build configuration list for PBXProject "VinAppleTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FE820432FEE71AA00FD0B7A /* Debug */,
+				1FE820442FEE71AA00FD0B7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FE820452FEE71AA00FD0B7A /* Build configuration list for PBXNativeTarget "VinAppleTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FE820462FEE71AA00FD0B7A /* Debug */,
+				1FE820472FEE71AA00FD0B7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FE820482FEE71AA00FD0B7A /* Build configuration list for PBXNativeTarget "VinAppleTVTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FE820492FEE71AA00FD0B7A /* Debug */,
+				1FE8204A2FEE71AA00FD0B7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FE8204B2FEE71AA00FD0B7A /* Build configuration list for PBXNativeTarget "VinAppleTVUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FE8204C2FEE71AA00FD0B7A /* Debug */,
+				1FE8204D2FEE71AA00FD0B7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		2A1000212FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/TVData" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AppSPM/TVData;
+		};
+		2A1000222FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/TVDomain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AppSPM/TVDomain;
+		};
+		2A1000232FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPAppTheme" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AppSPM/VPAppTheme;
+		};
+		2A1000242FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPCommon" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AppSPM/VPCommon;
+		};
+		2A1000252FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPLocalStorage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AppSPM/VPLocalStorage;
+		};
+		2A1000262FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPPlayer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AppSPM/VPPlayer;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2A1000112FEE900000000001 /* TVData */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A1000212FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/TVData" */;
+			productName = TVData;
+		};
+		2A1000122FEE900000000001 /* TVDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A1000222FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/TVDomain" */;
+			productName = TVDomain;
+		};
+		2A1000132FEE900000000001 /* VPAppTheme */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A1000232FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPAppTheme" */;
+			productName = VPAppTheme;
+		};
+		2A1000142FEE900000000001 /* VPCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A1000242FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPCommon" */;
+			productName = VPCommon;
+		};
+		2A1000152FEE900000000001 /* VPLocalStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A1000252FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPLocalStorage" */;
+			productName = VPLocalStorage;
+		};
+		2A1000162FEE900000000001 /* VPPlayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A1000262FEE900000000001 /* XCLocalSwiftPackageReference "AppSPM/VPPlayer" */;
+			productName = VPPlayer;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 1FE8201C2FEE71A800FD0B7A /* Project object */;
+}
