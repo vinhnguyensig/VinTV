@@ -15,11 +15,14 @@ private enum PlayerFocusTarget: Hashable {
     case back
     case playPause
     case forward
+    case retry
+    case dismiss
 }
 
 struct PlayerView: View {
     @Environment(\.vpTheme) private var theme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: PlayerViewModel
     @FocusState private var focusedTarget: PlayerFocusTarget?
     @State private var controlsArePresented = false
@@ -35,6 +38,7 @@ struct PlayerView: View {
                 .ignoresSafeArea()
 
             controlContrastGradient
+            stateOverlay
 
             controls
                 .padding(.horizontal, theme.layout.horizontalScreenInset)
@@ -103,6 +107,15 @@ struct PlayerView: View {
 
                 Spacer()
 
+                if let qualityLabel = viewModel.qualityLabel {
+                    Text(qualityLabel)
+                        .font(theme.fonts.metadata)
+                        .padding(.horizontal, theme.spacing.small)
+                        .padding(.vertical, theme.spacing.xxSmall)
+                        .background(.white.opacity(0.14), in: Capsule())
+                        .accessibilityLabel("Playback quality \(qualityLabel)")
+                }
+
                 Text("\(elapsedTime)  •  \(remainingTime) remaining")
                     .font(theme.fonts.metadata)
                     .foregroundStyle(theme.colors.secondaryText)
@@ -161,6 +174,57 @@ struct PlayerView: View {
             .easeOut(duration: reduceMotion ? 0.16 : theme.focus.animationDuration),
             value: controlsArePresented
         )
+    }
+
+    @ViewBuilder
+    private var stateOverlay: some View {
+        switch viewModel.state {
+        case .loading, .buffering, .seeking, .retrying, .reconnecting:
+            VStack(spacing: theme.spacing.medium) {
+                ProgressView()
+                    .controlSize(.large)
+                Text(playbackStatus)
+                    .font(theme.fonts.sectionTitle)
+            }
+            .padding(theme.spacing.large)
+            .background(.black.opacity(0.72), in: RoundedRectangle(cornerRadius: theme.radii.large))
+            .foregroundStyle(.white)
+            .accessibilityElement(children: .combine)
+        case .failed(let message):
+            VStack(spacing: theme.spacing.medium) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.system(size: 48))
+                Text("Playback Unavailable")
+                    .font(theme.fonts.sectionTitle)
+                Text(message)
+                    .font(theme.fonts.metadata)
+                    .foregroundStyle(theme.colors.secondaryText)
+                    .multilineTextAlignment(.center)
+                HStack(spacing: theme.spacing.medium) {
+                    playerButton(
+                        title: "Try Again",
+                        systemImage: "arrow.clockwise",
+                        target: .retry,
+                        isPrimary: true
+                    ) {
+                        viewModel.retry()
+                    }
+                    playerButton(
+                        title: "Dismiss",
+                        systemImage: "xmark",
+                        target: .dismiss
+                    ) {
+                        dismiss()
+                    }
+                }
+            }
+            .padding(theme.spacing.large)
+            .frame(maxWidth: 680)
+            .background(.black.opacity(0.86), in: RoundedRectangle(cornerRadius: theme.radii.large))
+            .foregroundStyle(.white)
+        default:
+            EmptyView()
+        }
     }
 
     private var playerProgress: some View {
@@ -264,13 +328,23 @@ struct PlayerView: View {
     private var playbackStatus: String {
         switch viewModel.state {
         case .idle:
+            return "Idle"
+        case .loading:
             return "Loading"
         case .ready:
             return "Ready"
+        case .buffering:
+            return "Buffering"
         case .playing:
             return "Playing"
         case .paused:
             return "Paused"
+        case .seeking:
+            return "Seeking"
+        case .retrying(let attempt):
+            return "Retrying · Attempt \(attempt)"
+        case .reconnecting:
+            return "Reconnecting"
         case .completed:
             return "Finished"
         case .failed:
@@ -282,6 +356,8 @@ struct PlayerView: View {
         switch viewModel.state {
         case .idle:
             return "clock"
+        case .loading, .buffering, .seeking, .retrying, .reconnecting:
+            return "arrow.triangle.2.circlepath"
         case .ready:
             return "checkmark.circle.fill"
         case .playing:

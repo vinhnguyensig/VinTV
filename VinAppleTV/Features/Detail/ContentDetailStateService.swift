@@ -12,7 +12,6 @@ import Combine
 @MainActor
 protocol FavoriteStateServicing: AnyObject {
     var favoriteContentIDs: Set<String> { get }
-    var favoriteContentIDsPublisher: AnyPublisher<Set<String>, Never> { get }
     func isFavorite(contentID: String) -> Bool
     func addFavorite(contentID: String)
     func removeFavorite(contentID: String)
@@ -28,10 +27,6 @@ final class LocalFavoriteStateService: ObservableObject, FavoriteStateServicing 
 
     private let store: KeyValueStoring
     @Published private(set) var favoriteContentIDs: Set<String>
-
-    var favoriteContentIDsPublisher: AnyPublisher<Set<String>, Never> {
-        $favoriteContentIDs.eraseToAnyPublisher()
-    }
 
     init(store: KeyValueStoring) {
         self.store = store

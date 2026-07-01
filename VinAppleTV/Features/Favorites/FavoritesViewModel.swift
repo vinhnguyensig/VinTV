@@ -32,11 +32,13 @@ final class FavoritesViewModel: ObservableObject {
         self.favoriteService = favoriteService
         self.contentDetailUseCase = contentDetailUseCase
 
-        favoriteObservation = favoriteService.favoriteContentIDsPublisher
-            .dropFirst()
-            .sink { [weak self] _ in
-                Task { await self?.load() }
-            }
+        if let observableService = favoriteService as? LocalFavoriteStateService {
+            favoriteObservation = observableService.$favoriteContentIDs
+                .dropFirst()
+                .sink { [weak self] _ in
+                    Task { await self?.load() }
+                }
+        }
     }
 
     func load() async {

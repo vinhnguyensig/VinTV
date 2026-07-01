@@ -17,27 +17,12 @@ struct SearchView: View {
     @Environment(\.vpTheme) private var theme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @ObservedObject var viewModel: SearchViewModel
-    @State private var favoriteContentIDs: Set<String>
-    let favoriteService: FavoriteStateServicing
+    @ObservedObject var favoriteService: LocalFavoriteStateService
     @FocusState private var focusedTarget: SearchFocusTarget?
     @State private var rememberedResultID: String?
     let makeContentDetailViewModel: @MainActor (String) -> ContentDetailViewModel
     let makePlayerViewModel:
         @MainActor (ContentDetailViewModel.PlaybackRequest) -> PlayerViewModel
-
-    init(
-        viewModel: SearchViewModel,
-        favoriteService: FavoriteStateServicing,
-        makeContentDetailViewModel: @escaping @MainActor (String) -> ContentDetailViewModel,
-        makePlayerViewModel:
-            @escaping @MainActor (ContentDetailViewModel.PlaybackRequest) -> PlayerViewModel
-    ) {
-        self.viewModel = viewModel
-        self.favoriteService = favoriteService
-        _favoriteContentIDs = State(initialValue: favoriteService.favoriteContentIDs)
-        self.makeContentDetailViewModel = makeContentDetailViewModel
-        self.makePlayerViewModel = makePlayerViewModel
-    }
 
     var body: some View {
         Group {
@@ -86,9 +71,6 @@ struct SearchView: View {
             let targetID = rememberedResultID.flatMap { ids.contains($0) ? $0 : nil } ?? firstID
             focusedTarget = .result(targetID)
         }
-        .onReceive(favoriteService.favoriteContentIDsPublisher) {
-            favoriteContentIDs = $0
-        }
     }
 
     private var loadingGrid: some View {
@@ -134,7 +116,7 @@ struct SearchView: View {
                     } label: {
                         ContentPosterCard(
                             content: item,
-                            isFavorite: favoriteContentIDs.contains(item.id)
+                            isFavorite: favoriteService.isFavorite(contentID: item.id)
                         )
                     }
                     .buttonStyle(.plain)

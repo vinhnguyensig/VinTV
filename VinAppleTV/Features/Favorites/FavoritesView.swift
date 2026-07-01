@@ -17,27 +17,12 @@ struct FavoritesView: View {
     @Environment(\.vpTheme) private var theme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @ObservedObject var viewModel: FavoritesViewModel
-    @State private var favoriteContentIDs: Set<String>
-    let favoriteService: FavoriteStateServicing
+    @ObservedObject var favoriteService: LocalFavoriteStateService
     @FocusState private var focusedTarget: FavoritesFocusTarget?
     @State private var rememberedContentID: String?
     let makeContentDetailViewModel: @MainActor (String) -> ContentDetailViewModel
     let makePlayerViewModel:
         @MainActor (ContentDetailViewModel.PlaybackRequest) -> PlayerViewModel
-
-    init(
-        viewModel: FavoritesViewModel,
-        favoriteService: FavoriteStateServicing,
-        makeContentDetailViewModel: @escaping @MainActor (String) -> ContentDetailViewModel,
-        makePlayerViewModel:
-            @escaping @MainActor (ContentDetailViewModel.PlaybackRequest) -> PlayerViewModel
-    ) {
-        self.viewModel = viewModel
-        self.favoriteService = favoriteService
-        _favoriteContentIDs = State(initialValue: favoriteService.favoriteContentIDs)
-        self.makeContentDetailViewModel = makeContentDetailViewModel
-        self.makePlayerViewModel = makePlayerViewModel
-    }
 
     var body: some View {
         Group {
@@ -71,7 +56,7 @@ struct FavoritesView: View {
                             } label: {
                                 ContentPosterCard(
                                     content: item,
-                                    isFavorite: favoriteContentIDs.contains(item.id)
+                                    isFavorite: favoriteService.isFavorite(contentID: item.id)
                                 )
                             }
                             .buttonStyle(.plain)
@@ -98,9 +83,6 @@ struct FavoritesView: View {
         .vpThemedBackground()
         .navigationTitle("Favorites")
         .task { await viewModel.load() }
-        .onReceive(favoriteService.favoriteContentIDsPublisher) {
-            favoriteContentIDs = $0
-        }
         .onChange(of: focusedTarget) { _, target in
             if case let .content(id)? = target {
                 rememberedContentID = id

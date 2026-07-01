@@ -55,12 +55,14 @@ final class ContentDetailViewModel: ObservableObject {
         self.favoriteService = favoriteService
         self.analyticsTracker = analyticsTracker
         self.localProgressStore = localProgressStore
-        favoriteObservation = favoriteService.favoriteContentIDsPublisher
-            .map { $0.contains(contentID) }
-            .removeDuplicates()
-            .sink { [weak self] isFavorite in
-                self?.isFavorite = isFavorite
-            }
+        if let observableService = favoriteService as? LocalFavoriteStateService {
+            favoriteObservation = observableService.$favoriteContentIDs
+                .map { $0.contains(contentID) }
+                .removeDuplicates()
+                .sink { [weak self] isFavorite in
+                    self?.isFavorite = isFavorite
+                }
+        }
     }
 
     var resumablePositionSeconds: TimeInterval? {

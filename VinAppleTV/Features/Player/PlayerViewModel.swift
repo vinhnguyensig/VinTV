@@ -17,10 +17,20 @@ final class PlayerViewModel: ObservableObject {
     @Published private(set) var state: VideoPlaybackState = .idle
     @Published private(set) var positionSeconds: TimeInterval = 0
     @Published private(set) var durationSeconds: TimeInterval = 0
+    @Published private(set) var metrics = PlaybackMetrics()
 
     let content: Content
     var player: AVPlayer { playerService.player }
     var isPlaying: Bool { state == .playing }
+    var canRetry: Bool {
+        if case .failed = state { return true }
+        return false
+    }
+    var qualityLabel: String? {
+        let bitrate = metrics.quality.observedBitrate
+        guard bitrate > 0 else { return nil }
+        return String(format: "%.1f Mbps", bitrate / 1_000_000)
+    }
 
     private let requestedStartSeconds: TimeInterval
     private let playerService: VideoPlayerServicing
@@ -56,6 +66,12 @@ final class PlayerViewModel: ObservableObject {
         }
         playerService.onProgress = { [weak self] position, duration in
             self?.handleProgress(position: position, duration: duration)
+        }
+        playerService.onEvent = { [weak self] event in
+            self?.handle(event: event)
+        }
+        playerService.onMetricsChange = { [weak self] metrics in
+            self?.metrics = metrics
         }
         playerService.load(url: streamURL)
     }
@@ -96,11 +112,17 @@ final class PlayerViewModel: ObservableObject {
 
     func stop() {
         guard hasStarted else { return }
-        playerService.pause()
         saveProgress()
+        playerService.stop()
         playerService.onStateChange = nil
         playerService.onProgress = nil
+        playerService.onEvent = nil
+        playerService.onMetricsChange = nil
         hasStarted = false
+    }
+
+    func retry() {
+        playerService.retry()
     }
 
     private func handleStateChange(_ newState: VideoPlaybackState) {
@@ -145,6 +167,55 @@ final class PlayerViewModel: ObservableObject {
     private func handleProgress(position: TimeInterval, duration: TimeInterval) {
         positionSeconds = position
         durationSeconds = duration > 0 ? duration : content.durationSeconds
+    }
+
+    private func handle(event: PlaybackEvent) {
+        let analyticsEvent: AnalyticsEvent
+        switch event {
+        case .startup(let duration):
+            analyticsEvent = .playbackStartup(
+                contentID: content.id, durationSeconds: duration
+            )
+        case .bufferStarted(let position):
+            analyticsEvent = .playbackBufferStarted(
+                contentID: content.id, positionSeconds: position
+            )
+        case .bufferEnded(let position, let duration):
+            analyticsEvent = .playbackBufferEnded(
+                contentID: content.id,
+                positionSeconds: position,
+                durationSeconds: duration
+            )
+        case .stalled(let position):
+            analyticsEvent = .playbackStalled(
+                contentID: content.id, positionSeconds: position
+            )
+        case .retry(let attempt, let position):
+            analyticsEvent = .playbackRetried(
+                contentID: content.id, attempt: attempt, positionSeconds: position
+            )
+        case .recovered(let position, let duration):
+            analyticsEvent = .playbackRecovered(
+                contentID: content.id,
+                positionSeconds: position,
+                durationSeconds: duration
+            )
+        case .milestone(let percent):
+            analyticsEvent = .playbackMilestone(contentID: content.id, percent: percent)
+        case .stopped(let position):
+            analyticsEvent = .playbackStopped(
+                contentID: content.id, positionSeconds: position
+            )
+        case .error(let message, let position):
+            analyticsEvent = .playbackError(
+                contentID: content.id,
+                message: message,
+                positionSeconds: position
+            )
+        case .networkChanged:
+            return
+        }
+        analyticsTracker.track(analyticsEvent)
     }
 
     private func saveProgress() {

@@ -7,7 +7,6 @@
 
 import Testing
 import AVFoundation
-import Combine
 import Foundation
 import TVDomain
 import VPAppTheme
@@ -34,23 +33,6 @@ struct VinAppleTVTests {
         #expect(viewModel.featuredContent.map(\.title) == ["Injected Featured"])
         #expect(viewModel.trendingContent.map(\.title) == ["Injected Featured", "Injected Trending"])
         #expect(analyticsTracker.events == [.screenViewed(.home)])
-    }
-
-    @Test func appContainerCreatesAnIsolatedPlayerServicePerSession() {
-        let container = AppContainer(
-            contentRepository: MockContentRepository(),
-            playerServiceFactory: { SpyVideoPlayerService() }
-        )
-        let content = makeContent(id: "player", streamURL: testStreamURL)
-        let request = ContentDetailViewModel.PlaybackRequest(
-            content: content,
-            startSeconds: 0
-        )
-
-        let first = container.makePlayerViewModel(request: request)
-        let second = container.makePlayerViewModel(request: request)
-
-        #expect(first.player !== second.player)
     }
 
     @Test func homeViewModelLoadsEverySectionFromItsDependency() async {
@@ -234,61 +216,6 @@ struct VinAppleTVTests {
 
         let secondReload = LocalFavoriteStateService(store: store)
         #expect(!secondReload.isFavorite(contentID: "saved"))
-    }
-
-    @Test func localPlaybackProgressIndexesEveryPersistedTitle() {
-        let store = InMemoryKeyValueStore()
-        let service = LocalPlaybackProgressService(store: store)
-        let first = StoredPlaybackProgress(
-            positionSeconds: 120,
-            durationSeconds: 1_200,
-            lastWatchedAt: Date(timeIntervalSince1970: 100),
-            isCompleted: false
-        )
-        let second = StoredPlaybackProgress(
-            positionSeconds: 300,
-            durationSeconds: 1_200,
-            lastWatchedAt: Date(timeIntervalSince1970: 200),
-            isCompleted: false
-        )
-
-        service.save(first, contentID: "first")
-        service.save(second, contentID: "second")
-
-        #expect(service.allProgress() == ["first": first, "second": second])
-    }
-
-    @Test func homeLoaderLetsPersistedProgressOverrideSeededProgress() async throws {
-        let content = makeContent(id: "watched")
-        let seededProgress = PlaybackProgress(
-            contentID: content.id,
-            positionSeconds: 300,
-            durationSeconds: 1_200,
-            updatedAt: Date(timeIntervalSince1970: 100)
-        )
-        let localStore = MockPlaybackProgressStore(
-            storedByContentID: [
-                content.id: StoredPlaybackProgress(
-                    positionSeconds: 1_200,
-                    durationSeconds: 1_200,
-                    lastWatchedAt: Date(timeIntervalSince1970: 200),
-                    isCompleted: true
-                )
-            ]
-        )
-        let loader = DefaultHomeContentLoader(
-            featuredContentUseCase: MockContentUseCase(content: [content]),
-            continueWatchingUseCase: MockContentUseCase(content: [content]),
-            trendingContentUseCase: MockContentUseCase(content: []),
-            recommendedContentUseCase: MockContentUseCase(content: []),
-            playbackProgressUseCase: MockPlaybackProgressUseCase(progress: seededProgress),
-            localProgressStore: localStore
-        )
-
-        let snapshot = try await loader.execute()
-
-        #expect(snapshot.continueWatching.isEmpty)
-        #expect(snapshot.progressByContentID[content.id]?.positionSeconds == 1_200)
     }
 
     @Test func favoritesViewModelResolvesStoredIDsThroughContentUseCase() async {
@@ -676,9 +603,6 @@ private final class MockFavoriteStateService: FavoriteStateServicing {
     var favoriteContentIDs: Set<String> {
         favorite ? ["favorite"] : []
     }
-    var favoriteContentIDsPublisher: AnyPublisher<Set<String>, Never> {
-        Empty(completeImmediately: false).eraseToAnyPublisher()
-    }
 
     init(isFavorite: Bool = false) {
         favorite = isFavorite
@@ -706,8 +630,11 @@ private final class MockFavoriteStateService: FavoriteStateServicing {
 private final class SpyVideoPlayerService: VideoPlayerServicing {
     let player = AVPlayer()
     private(set) var state: VideoPlaybackState = .idle
+    var metrics = PlaybackMetrics()
     var onStateChange: ((VideoPlaybackState) -> Void)?
     var onProgress: ((TimeInterval, TimeInterval) -> Void)?
+    var onEvent: ((PlaybackEvent) -> Void)?
+    var onMetricsChange: ((PlaybackMetrics) -> Void)?
     private(set) var loadedURL: URL?
     private(set) var seekSeconds: TimeInterval?
     private(set) var didPlay = false
@@ -733,6 +660,16 @@ private final class SpyVideoPlayerService: VideoPlayerServicing {
         seekSeconds = seconds
     }
 
+    func retry() {
+        state = .loading
+        onStateChange?(.loading)
+    }
+
+    func stop() {
+        state = .idle
+        onStateChange?(.idle)
+    }
+
     func sendProgress(position: TimeInterval, duration: TimeInterval) {
         onProgress?(position, duration)
     }
@@ -745,33 +682,21 @@ private final class SpyVideoPlayerService: VideoPlayerServicing {
 
 @MainActor
 private final class MockPlaybackProgressStore: PlaybackProgressStoring {
-    private var storedByContentID: [String: StoredPlaybackProgress]
+    let stored: StoredPlaybackProgress?
     private(set) var saved: StoredPlaybackProgress?
     private(set) var savedContentID: String?
-    var progressDidChangePublisher: AnyPublisher<String, Never> {
-        Empty(completeImmediately: false).eraseToAnyPublisher()
-    }
 
     init(stored: StoredPlaybackProgress? = nil) {
-        storedByContentID = stored.map { ["content": $0] } ?? [:]
-    }
-
-    init(storedByContentID: [String: StoredPlaybackProgress]) {
-        self.storedByContentID = storedByContentID
+        self.stored = stored
     }
 
     func progress(contentID: String) -> StoredPlaybackProgress? {
-        storedByContentID[contentID] ?? storedByContentID["content"]
-    }
-
-    func allProgress() -> [String: StoredPlaybackProgress] {
-        storedByContentID
+        stored
     }
 
     func save(_ progress: StoredPlaybackProgress, contentID: String) {
         saved = progress
         savedContentID = contentID
-        storedByContentID[contentID] = progress
     }
 }
 

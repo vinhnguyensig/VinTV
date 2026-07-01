@@ -28,8 +28,8 @@ protocol AppDependencyProviding {
 final class AppContainer: AppDependencyProviding {
     private let analyticsTracker: AnalyticsTracking
     private let contentRepository: ContentRepositoryProtocol
-    private let playerServiceFactory: @MainActor () -> VideoPlayerServicing
-    private let playbackProgressStore: LocalPlaybackProgressService
+    private let keyValueStore: KeyValueStoring
+    private let playerService: VideoPlayerServicing
     let favoriteService: LocalFavoriteStateService
     let theme: VPTheme
 
@@ -39,16 +39,14 @@ final class AppContainer: AppDependencyProviding {
             dataSource: MockContentDataSource()
         ),
         keyValueStore: KeyValueStoring = UserDefaultsKeyValueStore(),
-        playerServiceFactory: @escaping @MainActor () -> VideoPlayerServicing = {
-            VideoPlayerService()
-        },
+        playerService: VideoPlayerServicing? = nil,
         theme: VPTheme = VPTheme()
     ) {
         self.analyticsTracker = analyticsTracker
         self.contentRepository = contentRepository
+        self.keyValueStore = keyValueStore
         self.favoriteService = LocalFavoriteStateService(store: keyValueStore)
-        self.playbackProgressStore = LocalPlaybackProgressService(store: keyValueStore)
-        self.playerServiceFactory = playerServiceFactory
+        self.playerService = playerService ?? VideoPlayerService()
         self.theme = theme
     }
 
@@ -61,7 +59,6 @@ final class AppContainer: AppDependencyProviding {
             playbackProgressUseCase: DefaultGetPlaybackProgressUseCase(
                 repository: contentRepository
             ),
-            localProgressStore: playbackProgressStore,
             analyticsTracker: analyticsTracker
         )
     }
@@ -75,7 +72,7 @@ final class AppContainer: AppDependencyProviding {
             ),
             favoriteService: favoriteService,
             analyticsTracker: analyticsTracker,
-            localProgressStore: playbackProgressStore
+            localProgressStore: LocalPlaybackProgressService(store: keyValueStore)
         )
     }
 
@@ -98,8 +95,8 @@ final class AppContainer: AppDependencyProviding {
         PlayerViewModel(
             content: request.content,
             startSeconds: request.startSeconds,
-            playerService: playerServiceFactory(),
-            progressStore: playbackProgressStore,
+            playerService: playerService,
+            progressStore: LocalPlaybackProgressService(store: keyValueStore),
             analyticsTracker: analyticsTracker
         )
     }

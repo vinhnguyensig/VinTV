@@ -27,13 +27,12 @@ struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
     @StateObject private var favoritesViewModel: FavoritesViewModel
     @StateObject private var searchViewModel: SearchViewModel
-    @State private var favoriteContentIDs: Set<String>
+    @ObservedObject private var favoriteService: LocalFavoriteStateService
     @FocusState private var focusedTarget: HomeFocusTarget?
     @State private var rememberedTarget: HomeFocusTarget = .heroPlay
     @State private var isHeroPresented = false
     @State private var hasAppliedInitialHeroFocus = false
     @Namespace private var homeFocusNamespace
-    private let favoriteService: FavoriteStateServicing
     private let makeContentDetailViewModel: @MainActor (String) -> ContentDetailViewModel
     private let makePlayerViewModel:
         @MainActor (ContentDetailViewModel.PlaybackRequest) -> PlayerViewModel
@@ -50,7 +49,6 @@ struct HomeView: View {
         _viewModel = StateObject(wrappedValue: viewModel)
         _favoritesViewModel = StateObject(wrappedValue: favoritesViewModel)
         _searchViewModel = StateObject(wrappedValue: searchViewModel)
-        _favoriteContentIDs = State(initialValue: favoriteService.favoriteContentIDs)
         self.favoriteService = favoriteService
         self.makeContentDetailViewModel = makeContentDetailViewModel
         self.makePlayerViewModel = makePlayerViewModel
@@ -89,9 +87,6 @@ struct HomeView: View {
             if let newValue {
                 rememberedTarget = newValue
             }
-        }
-        .onReceive(favoriteService.favoriteContentIDsPublisher) {
-            favoriteContentIDs = $0
         }
         .focusScope(homeFocusNamespace)
     }
@@ -135,7 +130,7 @@ struct HomeView: View {
                                 ContentRail(
                                     title: "Continue Watching",
                                     content: viewModel.continueWatchingContent,
-                                    favoriteContentIDs: favoriteContentIDs,
+                                    favoriteContentIDs: favoriteService.favoriteContentIDs,
                                     playbackProgressByContentID: viewModel.playbackProgressByContentID,
                                     focusedTarget: $focusedTarget,
                                     onSelectContent: viewModel.selectContent,
@@ -148,7 +143,7 @@ struct HomeView: View {
                             ContentRail(
                                 title: "Trending",
                                 content: viewModel.trendingContent,
-                                favoriteContentIDs: favoriteContentIDs,
+                                favoriteContentIDs: favoriteService.favoriteContentIDs,
                                 playbackProgressByContentID: [:],
                                 focusedTarget: $focusedTarget,
                                 onSelectContent: viewModel.selectContent,
@@ -160,7 +155,7 @@ struct HomeView: View {
                             ContentRail(
                                 title: "Recommended",
                                 content: viewModel.recommendedContent,
-                                favoriteContentIDs: favoriteContentIDs,
+                                favoriteContentIDs: favoriteService.favoriteContentIDs,
                                 playbackProgressByContentID: [:],
                                 focusedTarget: $focusedTarget,
                                 onSelectContent: viewModel.selectContent,
@@ -211,7 +206,7 @@ struct HomeView: View {
             if let featured {
                 HeroBanner(
                     content: featured,
-                    isFavorite: favoriteContentIDs.contains(featured.id),
+                    isFavorite: favoriteService.isFavorite(contentID: featured.id),
                     focusedTarget: $focusedTarget,
                     focusNamespace: homeFocusNamespace,
                     onSelectContent: viewModel.selectContent,
