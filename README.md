@@ -11,7 +11,7 @@ without a backend service.
 
 ## Prototype
 
-Watch the [VinAppleTV prototype demo on YouTube](https://www.youtube.com/watch?v=6bZDNoif2rY).
+Watch the [VinAppleTV prototype demo on YouTube](https://www.youtube.com/watch?v=Whbqa7KqnFQ).
 
 ## Features
 
